@@ -5,6 +5,7 @@ import 'package:model_app/constants/colors.dart';
 // import 'package:model_app/constants/const.dart';
 import 'package:model_app/pages/arrivals_page.dart';
 import 'package:model_app/pages/home_page.dart';
+import 'package:model_app/pages/profile_page.dart';
 import 'package:model_app/pages/temp_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'App Name', //Orchid Furniture
+          'Orchid Furniture', //Orchid Furniture
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.brown),
         ),
         backgroundColor: col1(context),
@@ -151,9 +152,8 @@ class _MyHomePageState extends State<MyHomePage> {
       case 3:
         return const ArrivalsPage();
       case 4:
-        return TempPage(
-          str: 'Page 4',
-        );
+        return ProfilePage();
+
       case 0:
         return const HomePage();
       default:

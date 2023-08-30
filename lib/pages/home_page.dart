@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:model_app/pages/product_card.dart';
 import 'package:model_app/product_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,16 +10,44 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        children:
-            List.generate(20, (index) => myItem(index: index + 1, size: size)),
-      ),
-    ));
+        body: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('Products')
+                .where('status', isEqualTo: 'active')
+                .orderBy('rating', descending: true)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Center(
+                    child: CircularProgressIndicator(color: Colors.blue),
+                  );
+                default:
+                  if (snapshot.data!.docs.isNotEmpty) {
+                    return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListView(
+                          children: List.generate(snapshot.data!.docs.length,
+                              (index) {
+                            final doc = snapshot.data!.docs[index];
+                            return ProductCard(
+                              size: size,
+                              doc: doc,
+                            );
+                          }),
+                        ));
+                  } else {
+                    return Center(
+                      child: const Text(
+                        'No Products',
+                      ),
+                    );
+                  }
+              }
+            }));
   }
 }
 
@@ -52,9 +82,12 @@ class myItem extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
           child: Column(
             children: [
-              Icon(
-                Icons.image,
-                size: isNew ? 300 : 120,
+              Container(
+                height: size.height * .15,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                        image: AssetImage('images/c${index % 4}.jpg'))),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),

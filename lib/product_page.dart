@@ -13,16 +13,17 @@ class ProductPage extends StatelessWidget {
         title: Text('Product $index'),
         backgroundColor: col1(context),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
           children: [
-            Icon(
-              Icons.image,
-              size: 300,
-            ),
-            Text(
-                'Excepteur proident nulla deserunt consectetur sit. Ut cillum tempor cupidatat ex sit qui amet elit commodo amet sint. Consequat elit consequat quis exercitation laborum veniam. Irure pariatur voluptate sint elit adipisicing minim fugiat exercitation laborum tempor aute ipsum. Labore labore incididunt non nulla Lorem velit occaecat veniam anim exercitation ex ea.')
+            Image.asset('images/c${index % 4}.jpg'),
+            // Icon(
+            //   Icons.image,
+            //   size: 300,
+            // ),
+            const Text(
+                'Excepteur proident nulla deserunt consectetur sit. Ut cillum tempor cupidatat ex sit qui dent nulla deserunt consectetur sit. Ut cillum tempor cupidatat ex sit qui amet elit commodo amet sint. Consequat elit consequat quis exercitation laborum veniam. Irure pariatur voluptate sint elit adipisicing minim fugiat exercitation laborum tempor aute ipsum. Labore labore incididunt non nulla Lorem velit occaecat veniam anim exercitation ex ea.')
           ],
         ),
       ),
