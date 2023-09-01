@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:model_app/constants/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductPage2 extends StatefulWidget {
   ProductPage2({super.key, required this.doc});
@@ -156,6 +157,43 @@ class _ProductPage2State extends State<ProductPage2> {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: size.width * .4,
+              height: size.width * .12,
+              child: ElevatedButton(
+                  onPressed: () async {
+                    final phoneNumber = '+919048011615';
+                    final url = Uri(scheme: 'tel', host: phoneNumber);
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(
+                        url,
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: col1(context),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50))),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(
+                        Icons.call,
+                        size: 20,
+                      ),
+                      Text(
+                        'Contact Us',
+                        style: TextStyle(
+                            color: textColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                    ],
+                  )),
+            ),
+          ),
           Container(
             width: double.infinity,
             height: size.width * .2,
@@ -222,7 +260,7 @@ class _ProductPage2State extends State<ProductPage2> {
                             SnackBar(
                               content: NewSnackbar(
                                 errortext:
-                                    'Your $minQuantity Order is Placed\nTotal Price : ${widget.doc['product_price'] * minQuantity}',
+                                    'You can Order $minQuantity from shop\nTotal Price : ${widget.doc['product_price'] * minQuantity}\nContact No: 9048011615',
                                 errorcolor: Color.fromARGB(255, 248, 159, 127),
                               ),
                               elevation: 0,
@@ -236,7 +274,7 @@ class _ProductPage2State extends State<ProductPage2> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50))),
                         child: const Text(
-                          'Order',
+                          'Check Price',
                           // style: TextStyle(color: textColor),
                         )),
                   ),
@@ -289,11 +327,12 @@ class NewSnackbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Stack(
       clipBehavior: Clip.none,
       children: [
         Container(
-          height: 90,
+          height: size.height * .15,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
               border: Border.all(

@@ -42,7 +42,7 @@ class SellerProductCard extends StatelessWidget {
                     height: size.width * .3,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: Colors.blue.shade200,
+                      color: col1(context),
                       image: DecorationImage(
                         image: NetworkImage(passingdocument['image_url']),
                         fit: BoxFit.cover,

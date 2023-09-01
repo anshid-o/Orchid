@@ -349,7 +349,6 @@ class _RequestPageState extends State<RequestPage> {
                           });
                         } else {
                           final dl = await uploadImage(image!);
-                          print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
                           db.collection("Requests").doc().set({
                             'product_name': kpname.text,

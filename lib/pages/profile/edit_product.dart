@@ -303,7 +303,6 @@ class _EditProductFormState extends State<EditProductForm> {
                       if (_formKey.currentState!.validate()) {
                         final db = FirebaseFirestore.instance;
                         final dl = await uploadImage(image!);
-                        print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
                         db.collection("Products").doc(widget.productId).update({
                           'product_name': kpname.text,

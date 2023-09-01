@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isCustomer = true;
     // final size = MediaQuery.of(context).size;
     return Scaffold(
       // drawer: Drawer(
@@ -84,8 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
       //   ),
       // ),
       backgroundColor: col1(context),
-      body: buildPages(),
-      bottomNavigationBar: buidbottomNavBAr(),
+      body: buildPages(isCustomer),
+      bottomNavigationBar:
+          isCustomer ? buidbottomNavBAr() : buidbottomNavBAr2(),
     );
   }
 
@@ -151,14 +153,66 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildPages() {
+  Widget buidbottomNavBAr2() {
+    return BottomNavyBar(
+      itemCornerRadius: 20,
+      containerHeight: 65,
+      backgroundColor: color1,
+      selectedIndex: index,
+      items: <BottomNavyBarItem>[
+        BottomNavyBarItem(
+          activeColor: kc10,
+          textAlign: TextAlign.center,
+          inactiveColor: Colors.grey,
+          icon: const Icon(
+            Icons.home,
+          ),
+          title: const Text('Home'),
+        ),
+        BottomNavyBarItem(
+          activeColor: kc10,
+          textAlign: TextAlign.center,
+          inactiveColor: Colors.grey,
+          icon: const Icon(
+            Icons.new_releases_outlined,
+          ),
+          title: const Text('Latest'),
+        ),
+        BottomNavyBarItem(
+          activeColor: Colors.teal,
+          textAlign: TextAlign.center,
+          inactiveColor: Colors.grey,
+          icon: const Icon(Icons.local_offer_outlined),
+          title: const Text('Offer'),
+        ),
+        BottomNavyBarItem(
+          activeColor: kc10,
+          textAlign: TextAlign.center,
+          inactiveColor: Colors.grey,
+          icon: const Icon(
+            Icons.upcoming_outlined,
+          ),
+          title: const Text('Requests'),
+        ),
+      ],
+      onItemSelected: (index) {
+        if (mounted) {
+          setState(() {
+            this.index = index;
+          });
+        }
+      },
+    );
+  }
+
+  Widget buildPages(bool x) {
     switch (index) {
       case 1:
         return const ArrivalsPage();
       case 2:
         return const ComingPage();
       case 3:
-        return const ViewRequests();
+        return x ? const ViewRequests() : const RequestPage();
       case 4:
         return SellerProductPage();
 

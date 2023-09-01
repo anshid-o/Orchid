@@ -42,14 +42,6 @@ class _ViewRequestsState extends State<ViewRequests> {
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.brown),
         ),
         backgroundColor: col1(context),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => RequestPage()));
-              },
-              icon: const Icon(Icons.send))
-        ],
       ),
       body: Column(
         children: [
@@ -156,6 +148,11 @@ class _ViewRequestsState extends State<ViewRequests> {
                               itemBuilder: (context, index) {
                                 DocumentSnapshot document =
                                     snapshot.data!.docs[index];
+                                Timestamp ts = document['upload_time'];
+                                DateTime dt =
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        ts.millisecondsSinceEpoch);
+
                                 return Container(
                                   decoration: BoxDecoration(
                                       border: Border.all(color: Colors.black),
@@ -181,8 +178,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                                                                     .all(
                                                                 Radius.circular(
                                                                     10)),
-                                                        color: Colors
-                                                            .blue.shade200,
+                                                        color: col1(context),
                                                         image: DecorationImage(
                                                           image: NetworkImage(
                                                               document[
@@ -195,14 +191,13 @@ class _ViewRequestsState extends State<ViewRequests> {
                                                       width: size.width * .3,
                                                       height: size.width * .3,
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                Radius.circular(
-                                                                    10)),
-                                                        color: Colors
-                                                            .blue.shade200,
-                                                      ),
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10)),
+                                                          color: col1(context)),
                                                       child: Icon(
                                                         Icons
                                                             .image_not_supported,
@@ -227,7 +222,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                                                   child: SizedBox(
                                                     width: size.width * .5,
                                                     child: Text(
-                                                      document['product_name']!,
+                                                      document['product_name'],
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 2,
@@ -244,6 +239,22 @@ class _ViewRequestsState extends State<ViewRequests> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8.0, left: 10),
+                                                  child: SizedBox(
+                                                    width: size.width * .5,
+                                                    child: Text(
+                                                      '${dt.year}/${dt.month}/${dt.day}',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
+                                                      style: const TextStyle(
+                                                          fontSize: 18),
+                                                    ),
+                                                  ),
+                                                ),
                                                 SizedBox(
                                                     width: size.width * .03),
                                               ],

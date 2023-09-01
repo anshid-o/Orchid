@@ -336,7 +336,6 @@ class _AddProduct2State extends State<AddProduct2> {
                 // ),
                 ElevatedButton(
                   onPressed: () async {
-                    print(image);
                     if (image == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -354,7 +353,6 @@ class _AddProduct2State extends State<AddProduct2> {
                         final user = FirebaseAuth.instance.currentUser;
                         final db = FirebaseFirestore.instance;
                         final dl = await uploadImage(image!);
-                        print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
                         db.collection("Products").doc().set({
                           'product_name': kpname.text,
